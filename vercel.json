@@ -1,0 +1,9 @@
+{
+  "redirects": [
+    {
+      "source": "/gizliliksozlesmesi",
+      "destination": "/privacy.html",
+      "permanent": true
+    }
+  ]
+}
