@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Maniforia — Gizlilik Politikası</title>
+  <meta name="description" content="Maniforia Gizlilik Politikası: kişisel verilerinizin nasıl toplandığını, kullanıldığını ve korunduğunu açıklar." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Marcellus&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --gold: #d4a942;
+      --gold-bright: #e9c46a;
+      --gold-light: #f1d687;
+      --gold-dim: #a8842c;
+      --ink: #f5f3ff;
+      --ink-soft: rgba(245, 243, 255, 0.82);
+      --ink-muted: rgba(245, 243, 255, 0.62);
+      --ink-faded: rgba(245, 243, 255, 0.45);
+      --max-width: 820px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Manrope', system-ui, sans-serif;
+      background: #030518;
+      color: var(--ink);
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.7;
+    }
+
+    /* Atmospheric background */
+    .cosmos {
+      position: fixed;
+      inset: 0;
+      z-index: -3;
+      background:
+        radial-gradient(ellipse at 15% 15%, rgba(30, 58, 138, 0.40) 0%, transparent 45%),
+        radial-gradient(ellipse at 85% 20%, rgba(91, 33, 182, 0.28) 0%, transparent 50%),
+        radial-gradient(ellipse at 75% 75%, rgba(15, 42, 102, 0.38) 0%, transparent 55%),
+        radial-gradient(ellipse at 25% 85%, rgba(109, 40, 217, 0.22) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 50%, rgba(6, 12, 28, 0.85) 0%, transparent 70%),
+        linear-gradient(180deg, #030518 0%, #08122e 35%, #0c1c44 70%, #030518 100%);
+      background-size: 200% 200%;
+      animation: drift 28s ease-in-out infinite alternate;
+    }
+    @keyframes drift {
+      0%   { background-position: 0% 0%, 100% 0%, 100% 100%, 0% 100%, 50% 50%, 0% 0%; }
+      100% { background-position: 10% 20%, 80% 30%, 70% 60%, 20% 70%, 50% 50%, 0% 0%; }
+    }
+
+    .aurora {
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      pointer-events: none;
+      opacity: 0.28;
+    }
+    .aurora::before, .aurora::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(120px);
+      mix-blend-mode: screen;
+    }
+    .aurora::before {
+      width: 55vmax; height: 55vmax;
+      left: -10vmax; top: -10vmax;
+      background: radial-gradient(circle, rgba(59, 130, 246, 0.40), transparent 60%);
+    }
+    .aurora::after {
+      width: 50vmax; height: 50vmax;
+      right: -15vmax; bottom: -10vmax;
+      background: radial-gradient(circle, rgba(139, 92, 246, 0.36), transparent 60%);
+    }
+
+    .stars {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      background-image:
+        radial-gradient(1px 1px at 20% 30%, #fff 50%, transparent 100%),
+        radial-gradient(1px 1px at 60% 70%, rgba(255,255,255,0.8) 50%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 85% 15%, #fff 50%, transparent 100%),
+        radial-gradient(1px 1px at 35% 85%, rgba(255,255,255,0.7) 50%, transparent 100%),
+        radial-gradient(1px 1px at 75% 45%, #fff 50%, transparent 100%),
+        radial-gradient(2px 2px at 10% 60%, rgba(255,255,255,0.9) 50%, transparent 100%);
+      opacity: 0.55;
+    }
+
+    /* Language switcher */
+    .lang-switch {
+      position: fixed;
+      top: 24px;
+      right: 28px;
+      z-index: 100;
+      display: inline-flex;
+      align-items: center;
+      gap: 2px;
+      padding: 6px;
+      background: rgba(10, 7, 37, 0.65);
+      border: 1px solid rgba(233, 196, 106, 0.22);
+      border-radius: 999px;
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+    }
+    .lang-btn {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      padding: 7px 14px;
+      border: 0;
+      background: transparent;
+      color: var(--ink-faded);
+      border-radius: 999px;
+      cursor: pointer;
+      transition: all 0.35s ease;
+      text-transform: uppercase;
+    }
+    .lang-btn:hover { color: var(--gold-light); }
+    .lang-btn.active {
+      background: linear-gradient(135deg, rgba(233, 196, 106, 0.2), rgba(168, 132, 44, 0.15));
+      color: var(--gold-bright);
+      box-shadow: inset 0 0 0 1px rgba(233, 196, 106, 0.35);
+    }
+
+    /* Back link */
+    .back-link {
+      position: fixed;
+      top: 24px;
+      left: 28px;
+      z-index: 100;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 18px;
+      background: rgba(10, 7, 37, 0.55);
+      border: 1px solid rgba(233, 196, 106, 0.2);
+      border-radius: 999px;
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      text-decoration: none;
+      color: var(--ink-soft);
+      font-size: 13px;
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      letter-spacing: 0.08em;
+      transition: all 0.35s ease;
+    }
+    .back-link:hover {
+      color: var(--gold-bright);
+      border-color: rgba(233, 196, 106, 0.6);
+      transform: translateX(-2px);
+    }
+    .back-link svg { width: 14px; height: 14px; }
+
+    /* Layout */
+    main {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 130px 32px 80px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Hero */
+    .doc-header {
+      text-align: center;
+      margin-bottom: 70px;
+      animation: fadeUp 1s cubic-bezier(0.23, 1, 0.32, 1) both;
+    }
+    .doc-eyebrow {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 13px;
+      letter-spacing: 0.38em;
+      text-transform: uppercase;
+      color: var(--gold);
+      opacity: 0.78;
+      margin-bottom: 18px;
+    }
+    .doc-title {
+      font-family: 'Marcellus', serif;
+      font-weight: 400;
+      font-size: clamp(36px, 5vw, 58px);
+      line-height: 1.1;
+      letter-spacing: 0.05em;
+      background: linear-gradient(180deg, #f7e3a4 0%, #e9c46a 50%, #a8842c 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 20px;
+    }
+    .doc-updated {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 15px;
+      color: var(--ink-muted);
+      letter-spacing: 0.08em;
+    }
+    .doc-divider {
+      display: block;
+      width: 60px;
+      height: 1px;
+      margin: 28px auto 0;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Lede paragraph */
+    .lede {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 19px;
+      line-height: 1.6;
+      color: var(--ink-soft);
+      text-align: center;
+      margin: 0 auto 64px;
+      max-width: 640px;
+    }
+
+    /* Sections */
+    .doc-section {
+      margin-bottom: 48px;
+    }
+    .doc-section h2 {
+      font-family: 'Marcellus', serif;
+      font-weight: 400;
+      font-size: 24px;
+      letter-spacing: 0.04em;
+      color: var(--gold-bright);
+      margin-bottom: 18px;
+      display: flex;
+      align-items: baseline;
+      gap: 14px;
+    }
+    .doc-section h2 .num {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-weight: 400;
+      font-size: 18px;
+      color: var(--gold-dim);
+      letter-spacing: 0.1em;
+      flex-shrink: 0;
+      min-width: 28px;
+    }
+    .doc-section h3 {
+      font-family: 'Marcellus', serif;
+      font-weight: 400;
+      font-size: 16px;
+      letter-spacing: 0.05em;
+      color: var(--gold-light);
+      margin: 22px 0 10px;
+    }
+    .doc-section p {
+      color: var(--ink-soft);
+      font-size: 15.5px;
+      margin-bottom: 14px;
+    }
+    .doc-section ul {
+      list-style: none;
+      padding: 0;
+      margin: 12px 0 16px;
+    }
+    .doc-section li {
+      position: relative;
+      padding-left: 22px;
+      color: var(--ink-soft);
+      font-size: 15.5px;
+      margin-bottom: 10px;
+    }
+    .doc-section li::before {
+      content: "◆";
+      position: absolute;
+      left: 0;
+      top: 2px;
+      color: var(--gold);
+      font-size: 9px;
+      opacity: 0.8;
+    }
+    .doc-section strong {
+      color: var(--gold-light);
+      font-weight: 500;
+    }
+    .doc-section em {
+      color: var(--ink);
+      font-style: italic;
+    }
+
+    /* Warning note */
+    .note-warning {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      background: rgba(233, 196, 106, 0.07);
+      border: 1px solid rgba(233, 196, 106, 0.18);
+      border-radius: 10px;
+      padding: 14px 18px;
+      margin: 14px 0;
+      font-size: 14.5px;
+      color: var(--ink-muted);
+      font-style: italic;
+    }
+    .note-warning .warn-icon {
+      color: var(--gold);
+      font-style: normal;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    /* Developer info box */
+    .dev-box {
+      background: rgba(233, 196, 106, 0.05);
+      border: 1px solid rgba(233, 196, 106, 0.16);
+      border-radius: 12px;
+      padding: 20px 24px;
+      margin-top: 14px;
+    }
+    .dev-box p {
+      margin-bottom: 6px;
+      font-size: 15px;
+    }
+    .dev-box p:last-child { margin-bottom: 0; }
+
+    /* Contact box */
+    .contact-box {
+      margin-top: 60px;
+      padding: 36px 32px;
+      background: linear-gradient(135deg, rgba(15, 10, 35, 0.5), rgba(30, 20, 65, 0.45));
+      border: 1px solid rgba(233, 196, 106, 0.22);
+      border-radius: 16px;
+      text-align: center;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      position: relative;
+      overflow: hidden;
+    }
+    .contact-box::before {
+      content: "";
+      position: absolute;
+      top: -1px;
+      left: 20%;
+      right: 20%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    }
+    .contact-box .label {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 13px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      opacity: 0.75;
+      margin-bottom: 10px;
+    }
+    .contact-box .email {
+      font-family: 'Marcellus', serif;
+      font-size: 22px;
+      letter-spacing: 0.03em;
+      background: linear-gradient(180deg, #f7e3a4 0%, #e9c46a 60%, #d4a942 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      display: inline-block;
+    }
+    .contact-box .email:hover {
+      transform: translateY(-1px);
+      filter: drop-shadow(0 2px 8px rgba(233, 196, 106, 0.35));
+    }
+
+    /* Footer */
+    footer {
+      max-width: var(--max-width);
+      margin: 60px auto 0;
+      padding: 32px 32px 40px;
+      text-align: center;
+      border-top: 1px solid rgba(233, 196, 106, 0.12);
+      position: relative;
+    }
+    footer::before {
+      content: "";
+      position: absolute;
+      top: -1px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 120px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    }
+    footer p {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 12.5px;
+      color: var(--ink-faded);
+      letter-spacing: 0.16em;
+    }
+
+    /* Responsive */
+    @media (max-width: 640px) {
+      main { padding: 110px 22px 60px; }
+      .lang-switch { top: 16px; right: 14px; padding: 4px; }
+      .lang-btn { padding: 6px 11px; font-size: 11px; letter-spacing: 0.18em; }
+      .back-link { top: 16px; left: 14px; padding: 8px 14px; font-size: 12px; }
+      .doc-title { letter-spacing: 0.03em; }
+      .doc-section h2 { font-size: 20px; gap: 10px; }
+      .doc-section h2 .num { font-size: 15px; }
+      .doc-section p, .doc-section li { font-size: 14.5px; }
+      .lede { font-size: 17px; margin-bottom: 48px; }
+      .contact-box { padding: 28px 22px; }
+      .contact-box .email { font-size: 18px; word-break: break-all; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .cosmos { animation: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="cosmos" aria-hidden="true"></div>
+  <div class="aurora" aria-hidden="true"></div>
+  <div class="stars" aria-hidden="true"></div>
+
+  <!-- Back to home -->
+  <a class="back-link" href="index.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M19 12H5M12 19l-7-7 7-7"/>
+    </svg>
+    <span data-i18n="back">Ana Sayfa</span>
+  </a>
+
+  <!-- Language switcher -->
+  <div class="lang-switch" role="group" aria-label="Language">
+    <button class="lang-btn active" data-lang="tr" type="button">TR</button>
+    <button class="lang-btn" data-lang="en" type="button">EN</button>
+  </div>
+
+  <main>
+    <header class="doc-header">
+      <div class="doc-eyebrow" data-i18n="eyebrow">Yasal Belge</div>
+      <h1 class="doc-title" data-i18n="title">Gizlilik Politikası</h1>
+      <div class="doc-updated">
+        <span data-i18n="lastUpdatedLabel">Son Güncelleme:</span>
+        <span data-i18n="lastUpdatedDate">19 Nisan 2026</span>
+      </div>
+      <span class="doc-divider" aria-hidden="true"></span>
+    </header>
+
+    <p class="lede" data-i18n="lede">
+      Maniforia, kullanıcı gizliliğine önem verir. Bu politika, uygulamayı kullanırken verilerinizin nasıl toplandığını ve kullanıldığını açıklar.
+    </p>
+
+    <!-- 1. Giriş / Introduction -->
+    <section class="doc-section">
+      <h2><span class="num">01</span><span data-i18n="s1_title">Giriş</span></h2>
+      <p data-i18n="s1_body">Maniforia, kullanıcı gizliliğine önem verir. Bu politika, uygulamayı kullanırken verilerinizin nasıl toplandığını ve kullanıldığını açıklar.</p>
+    </section>
+
+    <!-- 2. Geliştirici Bilgisi / Developer Information -->
+    <section class="doc-section">
+      <h2><span class="num">02</span><span data-i18n="s2_title">Geliştirici Bilgisi</span></h2>
+      <div class="dev-box">
+        <p><strong data-i18n="s2_dev_label">Geliştirici:</strong> <span data-i18n="s2_dev_value">Bireysel</span></p>
+        <p><strong data-i18n="s2_email_label">E-posta:</strong> <a href="mailto:maniforiaapp@gmail.com" style="color:var(--gold-bright);text-decoration:none;">maniforiaapp@gmail.com</a></p>
+      </div>
+    </section>
+
+    <!-- 3. Toplanan Veriler / Information We Collect -->
+    <section class="doc-section">
+      <h2><span class="num">03</span><span data-i18n="s3_title">Toplanan Veriler</span></h2>
+
+      <h3 data-i18n="s3_sub1">Kullanıcının Sağladığı Veriler:</h3>
+      <ul>
+        <li data-i18n="s3_i1">İsim veya kullanıcı adı (zorunlu değil)</li>
+        <li data-i18n="s3_i2">E-posta (Apple / Google ile giriş)</li>
+        <li data-i18n="s3_i3">Profil fotoğrafı (isteğe bağlı)</li>
+        <li data-i18n="s3_i4">Yüklenen görseller (isteğe bağlı)</li>
+        <li data-i18n="s3_i5">Doğum bilgileri (isteğe bağlı)</li>
+      </ul>
+
+      <h3 data-i18n="s3_sub2">Otomatik Toplanan Veriler:</h3>
+      <ul>
+        <li data-i18n="s3_i6">IP adresi, konum veya cihaz verisi bilinçli olarak toplanmaz</li>
+        <li data-i18n="s3_i7">Ancak Supabase gibi servisler teknik olarak işleyebilir</li>
+      </ul>
+    </section>
+
+    <!-- 4. Verilerin Kullanımı / How We Use Your Information -->
+    <section class="doc-section">
+      <h2><span class="num">04</span><span data-i18n="s4_title">Verilerin Kullanımı</span></h2>
+      <ul>
+        <li data-i18n="s4_i1">Uygulama işleyişi</li>
+        <li data-i18n="s4_i2">Giriş sistemi</li>
+        <li data-i18n="s4_i3">Kullanıcı içerikleri</li>
+        <li data-i18n="s4_i4">Bildirim gönderimi</li>
+      </ul>
+      <p data-i18n="s4_note">Reklam amacıyla kullanılmaz.</p>
+    </section>
+
+    <!-- 5. Ödemeler / Payments -->
+    <section class="doc-section">
+      <h2><span class="num">05</span><span data-i18n="s5_title">Ödemeler</span></h2>
+      <ul>
+        <li data-i18n="s5_i1">Sadece App Store & Google Play üzerinden yapılır</li>
+        <li data-i18n="s5_i2">Kart bilgisi tutulmaz</li>
+      </ul>
+    </section>
+
+    <!-- 6. Veri Paylaşımı / Data Sharing -->
+    <section class="doc-section">
+      <h2><span class="num">06</span><span data-i18n="s6_title">Veri Paylaşımı</span></h2>
+      <p data-i18n="s6_body">Verileriniz satılmaz ve paylaşılmaz.</p>
+    </section>
+
+    <!-- 7. Güvenlik / Security -->
+    <section class="doc-section">
+      <h2><span class="num">07</span><span data-i18n="s7_title">Güvenlik</span></h2>
+      <p data-i18n="s7_body">Veriler güvenli altyapıda saklanır (Supabase).</p>
+    </section>
+
+    <!-- 8. Kamera ve Medya / Camera & Media Access -->
+    <section class="doc-section">
+      <h2><span class="num">08</span><span data-i18n="s8_title">Kamera ve Medya</span></h2>
+      <p data-i18n="s8_body">Sadece kullanıcı izin verirse kullanılır.</p>
+    </section>
+
+    <!-- 9. Bildirimler / Push Notifications -->
+    <section class="doc-section">
+      <h2><span class="num">09</span><span data-i18n="s9_title">Bildirimler</span></h2>
+      <p data-i18n="s9_body">İstenirse kapatılabilir.</p>
+    </section>
+
+    <!-- 10. Çocuklar / Children's Privacy -->
+    <section class="doc-section">
+      <h2><span class="num">10</span><span data-i18n="s10_title">Çocuklar</span></h2>
+      <p data-i18n="s10_body">13 yaş altı kullanıcılar erişebilir. Gerekirse veri silinir.</p>
+    </section>
+
+    <!-- 11. Haklarınız / Your Rights -->
+    <section class="doc-section">
+      <h2><span class="num">11</span><span data-i18n="s11_title">Haklarınız</span></h2>
+      <ul>
+        <li data-i18n="s11_i1">Veri görüntüleme</li>
+        <li data-i18n="s11_i2">Güncelleme</li>
+        <li data-i18n="s11_i3">Hesap silme</li>
+      </ul>
+    </section>
+
+    <!-- 12. Veri Saklama / Data Retention -->
+    <section class="doc-section">
+      <h2><span class="num">12</span><span data-i18n="s12_title">Veri Saklama</span></h2>
+      <p data-i18n="s12_body">Hesap silinince veriler silinir.</p>
+    </section>
+
+    <!-- 13. Üçüncü Taraflar / Third-Party Services -->
+    <section class="doc-section">
+      <h2><span class="num">13</span><span data-i18n="s13_title">Üçüncü Taraflar</span></h2>
+      <ul>
+        <li data-i18n="s13_i1">Supabase</li>
+        <li data-i18n="s13_i2">Apple / Google</li>
+      </ul>
+    </section>
+
+    <!-- 14. Güncellemeler / Future Changes -->
+    <section class="doc-section">
+      <h2><span class="num">14</span><span data-i18n="s14_title">Güncellemeler</span></h2>
+      <p data-i18n="s14_body">Politika değişebilir.</p>
+    </section>
+
+    <!-- 15. İletişim / Contact -->
+    <section class="doc-section">
+      <h2><span class="num">15</span><span data-i18n="s15_title">İletişim</span></h2>
+      <div class="contact-box">
+        <div class="label" data-i18n="s15_label">E-posta</div>
+        <a class="email" href="mailto:maniforiaapp@gmail.com">maniforiaapp@gmail.com</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p data-i18n="footerCopy">© 2026 Maniforia · Her hak saklıdır · Bilinçaltını şekillendir</p>
+  </footer>
+
+  <script>
+    const translations = {
+      tr: {
+        htmlLang: "tr",
+        pageTitle: "Maniforia — Gizlilik Politikası",
+        back: "Ana Sayfa",
+        eyebrow: "Yasal Belge",
+        title: "Gizlilik Politikası",
+        lastUpdatedLabel: "Son Güncelleme:",
+        lastUpdatedDate: "19 Nisan 2026",
+        lede: "Maniforia, kullanıcı gizliliğine önem verir. Bu politika, uygulamayı kullanırken verilerinizin nasıl toplandığını ve kullanıldığını açıklar.",
+
+        s1_title: "Giriş",
+        s1_body: "Maniforia, kullanıcı gizliliğine önem verir. Bu politika, uygulamayı kullanırken verilerinizin nasıl toplandığını ve kullanıldığını açıklar.",
+
+        s2_title: "Geliştirici Bilgisi",
+        s2_dev_label: "Geliştirici:",
+        s2_dev_value: "Bireysel",
+        s2_email_label: "E-posta:",
+
+        s3_title: "Toplanan Veriler",
+        s3_sub1: "Kullanıcının Sağladığı Veriler:",
+        s3_i1: "İsim veya kullanıcı adı (zorunlu değil)",
+        s3_i2: "E-posta (Apple / Google ile giriş)",
+        s3_i3: "Profil fotoğrafı (isteğe bağlı)",
+        s3_i4: "Yüklenen görseller (isteğe bağlı)",
+        s3_i5: "Doğum bilgileri (isteğe bağlı)",
+        s3_sub2: "Otomatik Toplanan Veriler:",
+        s3_i6: "IP adresi, konum veya cihaz verisi bilinçli olarak toplanmaz",
+        s3_i7: "Ancak Supabase gibi servisler teknik olarak işleyebilir",
+
+        s4_title: "Verilerin Kullanımı",
+        s4_i1: "Uygulama işleyişi",
+        s4_i2: "Giriş sistemi",
+        s4_i3: "Kullanıcı içerikleri",
+        s4_i4: "Bildirim gönderimi",
+        s4_note: "Reklam amacıyla kullanılmaz.",
+
+        s5_title: "Ödemeler",
+        s5_i1: "Sadece App Store & Google Play üzerinden yapılır",
+        s5_i2: "Kart bilgisi tutulmaz",
+
+        s6_title: "Veri Paylaşımı",
+        s6_body: "Verileriniz satılmaz ve paylaşılmaz.",
+
+        s7_title: "Güvenlik",
+        s7_body: "Veriler güvenli altyapıda saklanır (Supabase).",
+
+        s8_title: "Kamera ve Medya",
+        s8_body: "Sadece kullanıcı izin verirse kullanılır.",
+
+        s9_title: "Bildirimler",
+        s9_body: "İstenirse kapatılabilir.",
+
+        s10_title: "Çocuklar",
+        s10_body: "13 yaş altı kullanıcılar erişebilir. Gerekirse veri silinir.",
+
+        s11_title: "Haklarınız",
+        s11_i1: "Veri görüntüleme",
+        s11_i2: "Güncelleme",
+        s11_i3: "Hesap silme",
+
+        s12_title: "Veri Saklama",
+        s12_body: "Hesap silinince veriler silinir.",
+
+        s13_title: "Üçüncü Taraflar",
+        s13_i1: "Supabase",
+        s13_i2: "Apple / Google",
+
+        s14_title: "Güncellemeler",
+        s14_body: "Politika değişebilir.",
+
+        s15_title: "İletişim",
+        s15_label: "E-posta",
+
+        footerCopy: "© 2026 Maniforia · Her hak saklıdır · Bilinçaltını şekillendir"
+      },
+      en: {
+        htmlLang: "en",
+        pageTitle: "Maniforia — Privacy Policy",
+        back: "Home",
+        eyebrow: "Legal Document",
+        title: "Privacy Policy",
+        lastUpdatedLabel: "Last Updated:",
+        lastUpdatedDate: "April 19, 2026",
+        lede: "Maniforia respects your privacy. This policy explains how your data is collected and used when you use the application.",
+
+        s1_title: "Introduction",
+        s1_body: "Maniforia (\"we\", \"our\", or \"us\") respects your privacy and is committed to protecting your personal data. This Privacy Policy explains how we collect, use, and safeguard your information when you use the Maniforia mobile application. If you do not agree with this policy, please do not use the application.",
+
+        s2_title: "Developer Information",
+        s2_dev_label: "Developer:",
+        s2_dev_value: "Individual Developer",
+        s2_email_label: "Contact Email:",
+
+        s3_title: "Information We Collect",
+        s3_sub1: "Information You Provide:",
+        s3_i1: "Name or nickname (optional)",
+        s3_i2: "Email address (via Apple Sign-In or Google Sign-In)",
+        s3_i3: "Profile photo (optional)",
+        s3_i4: "Uploaded images or content (optional)",
+        s3_i5: "Date of birth, birth time (optional)",
+        s3_sub2: "Automatically Collected Information:",
+        s3_i6: "We do not intentionally collect IP address, device identifiers, or location data",
+        s3_i7: "However, some technical data may be processed automatically by third-party services such as Supabase",
+
+        s4_title: "How We Use Your Information",
+        s4_i1: "Provide and operate the app",
+        s4_i2: "Enable login (Apple / Google authentication)",
+        s4_i3: "Store your profile and user-generated content",
+        s4_i4: "Send push notifications (if enabled)",
+        s4_note: "We do not use your data for advertising.",
+
+        s5_title: "Payments",
+        s5_i1: "All payments are processed via Apple App Store & Google Play Store",
+        s5_i2: "We do not collect or store credit card details or payment information",
+
+        s6_title: "Data Sharing",
+        s6_body: "We do not sell, rent, or share your personal data with third parties.",
+
+        s7_title: "Data Storage & Security",
+        s7_body: "We take reasonable security measures to protect your data. Your data is stored using secure infrastructure (Supabase). However, no system is 100% secure, and we cannot guarantee absolute security.",
+
+        s8_title: "Camera & Media Access",
+        s8_body: "The app may request access to your camera or photo library. This is only used when you choose to upload images or content. We do not access your media without your permission.",
+
+        s9_title: "Push Notifications",
+        s9_body: "We may send notifications related to app updates, reminders, or user experience improvements. You can disable notifications at any time from your device settings.",
+
+        s10_title: "Children's Privacy",
+        s10_body: "Maniforia is accessible to users under the age of 13. We do not knowingly collect sensitive personal data from children. If a parent or guardian believes that a child has provided personal data, please contact us and we will delete it.",
+
+        s11_title: "Your Rights",
+        s11_i1: "Access your data",
+        s11_i2: "Update your data",
+        s11_i3: "Delete your account at any time",
+
+        s12_title: "Data Retention",
+        s12_body: "We retain your data only as long as your account is active. If you delete your account, your data will be permanently removed within a reasonable time.",
+
+        s13_title: "Third-Party Services",
+        s13_i1: "Supabase (backend & database)",
+        s13_i2: "Apple Sign-In / Google Sign-In / App Store / Google Play (payments)",
+
+        s14_title: "Future Changes",
+        s14_body: "We may update this Privacy Policy in the future. Changes will be reflected by updating the \"Last updated\" date.",
+
+        s15_title: "Contact",
+        s15_label: "Email",
+
+        footerCopy: "© 2026 Maniforia · All rights reserved · Shape your subconscious"
+      }
+    };
+
+    const STORAGE_KEY = "maniforia_lang";
+
+    function setLang(lang) {
+      const dict = translations[lang] || translations.tr;
+      document.documentElement.lang = dict.htmlLang;
+      document.title = dict.pageTitle;
+
+      document.querySelectorAll("[data-i18n]").forEach(el => {
+        const key = el.getAttribute("data-i18n");
+        if (dict[key] != null) el.textContent = dict[key];
+      });
+
+      document.querySelectorAll(".lang-btn").forEach(btn => {
+        btn.classList.toggle("active", btn.dataset.lang === lang);
+        btn.setAttribute("aria-pressed", btn.dataset.lang === lang ? "true" : "false");
+      });
+
+      try { localStorage.setItem(STORAGE_KEY, lang); } catch (e) {}
+    }
+
+    document.querySelectorAll(".lang-btn").forEach(btn => {
+      btn.addEventListener("click", () => setLang(btn.dataset.lang));
+    });
+
+    (function initLang() {
+      let saved = null;
+      try { saved = localStorage.getItem(STORAGE_KEY); } catch (e) {}
+      const browser = (navigator.language || "tr").toLowerCase().startsWith("tr") ? "tr" : "en";
+      setLang(saved || browser || "tr");
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Maniforia — Hizmet Şartları</title>
+  <meta name="description" content="Maniforia Hizmet Şartları: uygulamayı kullanırken tabi olduğunuz koşulları açıklar." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Marcellus&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --gold: #d4a942;
+      --gold-bright: #e9c46a;
+      --gold-light: #f1d687;
+      --gold-dim: #a8842c;
+      --ink: #f5f3ff;
+      --ink-soft: rgba(245, 243, 255, 0.82);
+      --ink-muted: rgba(245, 243, 255, 0.62);
+      --ink-faded: rgba(245, 243, 255, 0.45);
+      --max-width: 820px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Manrope', system-ui, sans-serif;
+      background: #030518;
+      color: var(--ink);
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.7;
+    }
+
+    .cosmos {
+      position: fixed;
+      inset: 0;
+      z-index: -3;
+      background:
+        radial-gradient(ellipse at 15% 15%, rgba(30, 58, 138, 0.40) 0%, transparent 45%),
+        radial-gradient(ellipse at 85% 20%, rgba(91, 33, 182, 0.28) 0%, transparent 50%),
+        radial-gradient(ellipse at 75% 75%, rgba(15, 42, 102, 0.38) 0%, transparent 55%),
+        radial-gradient(ellipse at 25% 85%, rgba(109, 40, 217, 0.22) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 50%, rgba(6, 12, 28, 0.85) 0%, transparent 70%),
+        linear-gradient(180deg, #030518 0%, #08122e 35%, #0c1c44 70%, #030518 100%);
+      background-size: 200% 200%;
+      animation: drift 28s ease-in-out infinite alternate;
+    }
+    @keyframes drift {
+      0%   { background-position: 0% 0%, 100% 0%, 100% 100%, 0% 100%, 50% 50%, 0% 0%; }
+      100% { background-position: 10% 20%, 80% 30%, 70% 60%, 20% 70%, 50% 50%, 0% 0%; }
+    }
+
+    .aurora {
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      pointer-events: none;
+      opacity: 0.28;
+    }
+    .aurora::before, .aurora::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(120px);
+      mix-blend-mode: screen;
+    }
+    .aurora::before {
+      width: 55vmax; height: 55vmax;
+      left: -10vmax; top: -10vmax;
+      background: radial-gradient(circle, rgba(59, 130, 246, 0.40), transparent 60%);
+    }
+    .aurora::after {
+      width: 50vmax; height: 50vmax;
+      right: -15vmax; bottom: -10vmax;
+      background: radial-gradient(circle, rgba(139, 92, 246, 0.36), transparent 60%);
+    }
+
+    .stars {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      background-image:
+        radial-gradient(1px 1px at 20% 30%, #fff 50%, transparent 100%),
+        radial-gradient(1px 1px at 60% 70%, rgba(255,255,255,0.8) 50%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 85% 15%, #fff 50%, transparent 100%),
+        radial-gradient(1px 1px at 35% 85%, rgba(255,255,255,0.7) 50%, transparent 100%),
+        radial-gradient(1px 1px at 75% 45%, #fff 50%, transparent 100%),
+        radial-gradient(2px 2px at 10% 60%, rgba(255,255,255,0.9) 50%, transparent 100%);
+      opacity: 0.55;
+    }
+
+    /* Language switcher */
+    .lang-switch {
+      position: fixed;
+      top: 24px;
+      right: 28px;
+      z-index: 100;
+      display: inline-flex;
+      align-items: center;
+      gap: 2px;
+      padding: 6px;
+      background: rgba(10, 7, 37, 0.65);
+      border: 1px solid rgba(233, 196, 106, 0.22);
+      border-radius: 999px;
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+    }
+    .lang-btn {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      padding: 7px 14px;
+      border: 0;
+      background: transparent;
+      color: var(--ink-faded);
+      border-radius: 999px;
+      cursor: pointer;
+      transition: all 0.35s ease;
+      text-transform: uppercase;
+    }
+    .lang-btn:hover { color: var(--gold-light); }
+    .lang-btn.active {
+      background: linear-gradient(135deg, rgba(233, 196, 106, 0.2), rgba(168, 132, 44, 0.15));
+      color: var(--gold-bright);
+      box-shadow: inset 0 0 0 1px rgba(233, 196, 106, 0.35);
+    }
+
+    /* Back link */
+    .back-link {
+      position: fixed;
+      top: 24px;
+      left: 28px;
+      z-index: 100;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 18px;
+      background: rgba(10, 7, 37, 0.55);
+      border: 1px solid rgba(233, 196, 106, 0.2);
+      border-radius: 999px;
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      text-decoration: none;
+      color: var(--ink-soft);
+      font-size: 13px;
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      letter-spacing: 0.08em;
+      transition: all 0.35s ease;
+    }
+    .back-link:hover {
+      color: var(--gold-bright);
+      border-color: rgba(233, 196, 106, 0.6);
+      transform: translateX(-2px);
+    }
+    .back-link svg { width: 14px; height: 14px; }
+
+    /* Layout */
+    main {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 130px 32px 80px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Hero */
+    .doc-header {
+      text-align: center;
+      margin-bottom: 70px;
+      animation: fadeUp 1s cubic-bezier(0.23, 1, 0.32, 1) both;
+    }
+    .doc-eyebrow {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 13px;
+      letter-spacing: 0.38em;
+      text-transform: uppercase;
+      color: var(--gold);
+      opacity: 0.78;
+      margin-bottom: 18px;
+    }
+    .doc-title {
+      font-family: 'Marcellus', serif;
+      font-weight: 400;
+      font-size: clamp(32px, 5vw, 54px);
+      line-height: 1.1;
+      letter-spacing: 0.05em;
+      background: linear-gradient(180deg, #f7e3a4 0%, #e9c46a 50%, #a8842c 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 20px;
+    }
+    .doc-updated {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 15px;
+      color: var(--ink-muted);
+      letter-spacing: 0.08em;
+    }
+    .doc-divider {
+      display: block;
+      width: 60px;
+      height: 1px;
+      margin: 28px auto 0;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Lede */
+    .lede {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 19px;
+      line-height: 1.6;
+      color: var(--ink-soft);
+      text-align: center;
+      margin: 0 auto 64px;
+      max-width: 640px;
+    }
+
+    /* Sections */
+    .doc-section { margin-bottom: 48px; }
+
+    .doc-section h2 {
+      font-family: 'Marcellus', serif;
+      font-weight: 400;
+      font-size: 24px;
+      letter-spacing: 0.04em;
+      color: var(--gold-bright);
+      margin-bottom: 18px;
+      display: flex;
+      align-items: baseline;
+      gap: 14px;
+    }
+    .doc-section h2 .num {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-weight: 400;
+      font-size: 18px;
+      color: var(--gold-dim);
+      letter-spacing: 0.1em;
+      flex-shrink: 0;
+      min-width: 28px;
+    }
+    .doc-section h3 {
+      font-family: 'Marcellus', serif;
+      font-weight: 400;
+      font-size: 16px;
+      letter-spacing: 0.05em;
+      color: var(--gold-light);
+      margin: 22px 0 10px;
+    }
+    .doc-section p {
+      color: var(--ink-soft);
+      font-size: 15.5px;
+      margin-bottom: 14px;
+    }
+    .doc-section ul {
+      list-style: none;
+      padding: 0;
+      margin: 12px 0 16px;
+    }
+    .doc-section li {
+      position: relative;
+      padding-left: 22px;
+      color: var(--ink-soft);
+      font-size: 15.5px;
+      margin-bottom: 10px;
+    }
+    .doc-section li::before {
+      content: "◆";
+      position: absolute;
+      left: 0;
+      top: 2px;
+      color: var(--gold);
+      font-size: 9px;
+      opacity: 0.8;
+    }
+    .doc-section strong { color: var(--gold-light); font-weight: 500; }
+    .doc-section em { color: var(--ink); font-style: italic; }
+
+    /* Dev info box */
+    .dev-box {
+      background: rgba(233, 196, 106, 0.05);
+      border: 1px solid rgba(233, 196, 106, 0.16);
+      border-radius: 12px;
+      padding: 20px 24px;
+      margin-top: 14px;
+    }
+    .dev-box p { margin-bottom: 6px; font-size: 15px; }
+    .dev-box p:last-child { margin-bottom: 0; }
+
+    /* Important callout */
+    .callout {
+      background: rgba(233, 196, 106, 0.07);
+      border-left: 2px solid var(--gold-dim);
+      border-radius: 0 10px 10px 0;
+      padding: 16px 20px;
+      margin: 16px 0;
+    }
+    .callout p {
+      margin-bottom: 8px;
+      font-size: 14.5px;
+      color: var(--ink-muted);
+    }
+    .callout p:last-child { margin-bottom: 0; }
+    .callout ul { margin: 6px 0 0; }
+    .callout li { font-size: 14.5px; color: var(--ink-muted); margin-bottom: 6px; }
+
+    /* Contact box */
+    .contact-box {
+      margin-top: 60px;
+      padding: 36px 32px;
+      background: linear-gradient(135deg, rgba(15, 10, 35, 0.5), rgba(30, 20, 65, 0.45));
+      border: 1px solid rgba(233, 196, 106, 0.22);
+      border-radius: 16px;
+      text-align: center;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      position: relative;
+      overflow: hidden;
+    }
+    .contact-box::before {
+      content: "";
+      position: absolute;
+      top: -1px; left: 20%; right: 20%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    }
+    .contact-box .label {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 13px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      opacity: 0.75;
+      margin-bottom: 10px;
+    }
+    .contact-box .email {
+      font-family: 'Marcellus', serif;
+      font-size: 22px;
+      letter-spacing: 0.03em;
+      background: linear-gradient(180deg, #f7e3a4 0%, #e9c46a 60%, #d4a942 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      display: inline-block;
+    }
+    .contact-box .email:hover {
+      transform: translateY(-1px);
+      filter: drop-shadow(0 2px 8px rgba(233, 196, 106, 0.35));
+    }
+
+    /* Footer */
+    footer {
+      max-width: var(--max-width);
+      margin: 60px auto 0;
+      padding: 32px 32px 40px;
+      text-align: center;
+      border-top: 1px solid rgba(233, 196, 106, 0.12);
+      position: relative;
+    }
+    footer::before {
+      content: "";
+      position: absolute;
+      top: -1px; left: 50%;
+      transform: translateX(-50%);
+      width: 120px; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    }
+    footer p {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 12.5px;
+      color: var(--ink-faded);
+      letter-spacing: 0.16em;
+    }
+
+    /* Responsive */
+    @media (max-width: 640px) {
+      main { padding: 110px 22px 60px; }
+      .lang-switch { top: 16px; right: 14px; padding: 4px; }
+      .lang-btn { padding: 6px 11px; font-size: 11px; letter-spacing: 0.18em; }
+      .back-link { top: 16px; left: 14px; padding: 8px 14px; font-size: 12px; }
+      .doc-title { letter-spacing: 0.03em; }
+      .doc-section h2 { font-size: 20px; gap: 10px; }
+      .doc-section h2 .num { font-size: 15px; }
+      .doc-section p, .doc-section li { font-size: 14.5px; }
+      .lede { font-size: 17px; margin-bottom: 48px; }
+      .contact-box { padding: 28px 22px; }
+      .contact-box .email { font-size: 18px; word-break: break-all; }
+    }
+    @media (prefers-reduced-motion: reduce) { .cosmos { animation: none; } }
+  </style>
+</head>
+<body>
+  <div class="cosmos" aria-hidden="true"></div>
+  <div class="aurora" aria-hidden="true"></div>
+  <div class="stars" aria-hidden="true"></div>
+
+  <a class="back-link" href="index.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M19 12H5M12 19l-7-7 7-7"/>
+    </svg>
+    <span data-i18n="back">Ana Sayfa</span>
+  </a>
+
+  <div class="lang-switch" role="group" aria-label="Language">
+    <button class="lang-btn active" data-lang="tr" type="button">TR</button>
+    <button class="lang-btn" data-lang="en" type="button">EN</button>
+  </div>
+
+  <main>
+    <header class="doc-header">
+      <div class="doc-eyebrow" data-i18n="eyebrow">Yasal Belge</div>
+      <h1 class="doc-title" data-i18n="title">Hizmet Şartları</h1>
+      <div class="doc-updated">
+        <span data-i18n="lastUpdatedLabel">Son Güncelleme:</span>
+        <span data-i18n="lastUpdatedDate">19 Nisan 2026</span>
+      </div>
+      <span class="doc-divider" aria-hidden="true"></span>
+    </header>
+
+    <p class="lede" data-i18n="lede">
+      Maniforia uygulamasını kullanarak bu şartları kabul etmiş olursunuz.
+    </p>
+
+    <!-- 1. Kabul / Acceptance -->
+    <section class="doc-section">
+      <h2><span class="num">01</span><span data-i18n="s1_title">Kabul</span></h2>
+      <p data-i18n="s1_body">Maniforia uygulamasını kullanarak bu şartları kabul etmiş olursunuz.</p>
+      <p data-i18n="s1_body2">Kabul etmiyorsanız lütfen uygulamayı kullanmayınız.</p>
+    </section>
+
+    <!-- 2. Geliştirici / Developer Info -->
+    <section class="doc-section">
+      <h2><span class="num">02</span><span data-i18n="s2_title">Geliştirici Bilgisi</span></h2>
+      <div class="dev-box">
+        <p><strong data-i18n="s2_app_label">Uygulama Adı:</strong> <span data-i18n="s2_app_value">Maniforia</span></p>
+        <p><strong data-i18n="s2_dev_label">Geliştirici:</strong> <span data-i18n="s2_dev_value">Bireysel Geliştirici</span></p>
+        <p><strong data-i18n="s2_email_label">E-posta:</strong> <a href="mailto:maniforiaapp@gmail.com" style="color:var(--gold-bright);text-decoration:none;">maniforiaapp@gmail.com</a></p>
+      </div>
+    </section>
+
+    <!-- 3. Hizmet Tanımı / Description -->
+    <section class="doc-section">
+      <h2><span class="num">03</span><span data-i18n="s3_title">Hizmet Tanımı</span></h2>
+      <p data-i18n="s3_intro">Maniforia şunları sunar:</p>
+      <ul>
+        <li data-i18n="s3_i1">Olumlama içerikleri</li>
+        <li data-i18n="s3_i2">Kişisel gelişim araçları</li>
+        <li data-i18n="s3_i3">Kullanıcı içerikleri</li>
+        <li data-i18n="s3_i4">Premium üyelik özellikleri</li>
+      </ul>
+      <p data-i18n="s3_note">Uygulama yalnızca bilgilendirme ve kişisel gelişim amaçlıdır.</p>
+    </section>
+
+    <!-- 4. Uygunluk / Eligibility -->
+    <section class="doc-section">
+      <h2><span class="num">04</span><span data-i18n="s4_title">Kullanım Uygunluğu</span></h2>
+      <p data-i18n="s4_body">Uygulama her yaştan kullanıcı tarafından kullanılabilir.</p>
+      <p data-i18n="s4_body2">18 yaşın altındaysanız uygulamayı ebeveyn veya vasi gözetiminde kullanmanız önerilir.</p>
+    </section>
+
+    <!-- 5. Kullanıcı Hesapları / User Accounts -->
+    <section class="doc-section">
+      <h2><span class="num">05</span><span data-i18n="s5_title">Kullanıcı Hesapları</span></h2>
+      <p data-i18n="s5_intro">Belirli özellikler için şu yöntemlerle hesap oluşturabilirsiniz:</p>
+      <ul>
+        <li data-i18n="s5_i1">Apple ile Giriş</li>
+        <li data-i18n="s5_i2">Google ile Giriş</li>
+      </ul>
+      <p data-i18n="s5_agree_intro">Kullanıcı:</p>
+      <ul>
+        <li data-i18n="s5_a1">Hesabını güvenli tutmakla yükümlüdür</li>
+        <li data-i18n="s5_a2">Verdiği bilgilerin doğruluğundan sorumludur</li>
+        <li data-i18n="s5_a3">Hesabı altındaki tüm aktivitelerden sorumludur</li>
+      </ul>
+    </section>
+
+    <!-- 6. Kullanıcı İçerikleri / User Content -->
+    <section class="doc-section">
+      <h2><span class="num">06</span><span data-i18n="s6_title">Kullanıcı İçerikleri</span></h2>
+      <p data-i18n="s6_body">Yüklediğiniz içerik size aittir. Ancak uygulamada gösterilebilmesi için münhasır olmayan, dünya genelinde, telifsiz bir kullanım lisansı verirsiniz.</p>
+
+      <h3 data-i18n="s6_prohibited_title">Yasaklı İçerikler</h3>
+      <p data-i18n="s6_prohibited_intro">Aşağıdaki içerikleri yüklemek veya paylaşmak yasaktır:</p>
+      <ul>
+        <li data-i18n="s6_p1">Yasa dışı içerik</li>
+        <li data-i18n="s6_p2">Nefret söylemi veya taciz</li>
+        <li data-i18n="s6_p3">Müstehcen veya açık içerik</li>
+        <li data-i18n="s6_p4">Başkalarının haklarını ihlal eden içerik</li>
+      </ul>
+      <p data-i18n="s6_removal">Herhangi bir içeriği kendi takdirimizde kaldırma hakkımızı saklı tutarız.</p>
+    </section>
+
+    <!-- 7. Abonelik / Subscriptions -->
+    <section class="doc-section">
+      <h2><span class="num">07</span><span data-i18n="s7_title">Abonelik ve Ödemeler</span></h2>
+      <p data-i18n="s7_intro">Uygulama şunları sunabilir:</p>
+      <ul>
+        <li data-i18n="s7_i1">3 günlük ücretsiz deneme</li>
+        <li data-i18n="s7_i2">Aylık veya yıllık abonelik planları</li>
+      </ul>
+      <p data-i18n="s7_payment_intro">Ödemeler şu platformlar üzerinden gerçekleştirilir:</p>
+      <ul>
+        <li data-i18n="s7_p1">Apple App Store</li>
+        <li data-i18n="s7_p2">Google Play Store</li>
+      </ul>
+      <div class="callout">
+        <p data-i18n="s7_c1">Abonelikler iptal edilmediği sürece otomatik olarak yenilenir.</p>
+        <p data-i18n="s7_c2">İptal işlemleri uygulama mağazası hesabınız üzerinden yapılır.</p>
+        <p data-i18n="s7_c3">İadeler Apple veya Google tarafından yönetilir; Maniforia tarafından değil.</p>
+      </div>
+    </section>
+
+    <!-- 8. Fikri Mülkiyet / Intellectual Property -->
+    <section class="doc-section">
+      <h2><span class="num">08</span><span data-i18n="s8_title">Fikri Mülkiyet</span></h2>
+      <p data-i18n="s8_body">Kullanıcı tarafından üretilen içerikler hariç olmak üzere tasarım, marka ve yazılım dahil tüm uygulama içeriği Maniforia'ya aittir.</p>
+      <p data-i18n="s8_body2">İzin alınmadan uygulamanın hiçbir bölümü kopyalanamaz, dağıtılamaz veya kullanılamaz.</p>
+    </section>
+
+    <!-- 9. Kullanım Kısıtlamaları / Restrictions -->
+    <section class="doc-section">
+      <h2><span class="num">09</span><span data-i18n="s9_title">Kullanım Kısıtlamaları</span></h2>
+      <p data-i18n="s9_intro">Aşağıdakileri yapmamayı kabul edersiniz:</p>
+      <ul>
+        <li data-i18n="s9_i1">Uygulamayı tersine mühendislik yapmak veya hacklemek</li>
+        <li data-i18n="s9_i2">Yasadışı amaçlarla kullanmak</li>
+        <li data-i18n="s9_i3">Uygulama işlevselliğini engellemek</li>
+        <li data-i18n="s9_i4">Yetkisiz erişim girişiminde bulunmak</li>
+      </ul>
+    </section>
+
+    <!-- 10. Hesap Kapatma / Termination -->
+    <section class="doc-section">
+      <h2><span class="num">10</span><span data-i18n="s10_title">Hesap Kapatma</span></h2>
+      <p data-i18n="s10_body">Bu şartları ihlal etmeniz veya platformu kötüye kullanmanız halinde erişiminizi askıya alabilir veya sonlandırabiliriz.</p>
+      <p data-i18n="s10_body2">Kullanıcı istediği zaman hesabını silebilir.</p>
+    </section>
+
+    <!-- 11. Sorumluluk Reddi / Disclaimer -->
+    <section class="doc-section">
+      <h2><span class="num">11</span><span data-i18n="s11_title">Sorumluluk Reddi</span></h2>
+      <p data-i18n="s11_body">Uygulama motivasyonel ve kişisel gelişim içeriği sunar. Sonuçları veya kişisel çıktıları garanti etmiyoruz.</p>
+      <p data-i18n="s11_body2">Uygulama şunların yerine geçmez:</p>
+      <ul>
+        <li data-i18n="s11_i1">Tıbbi tavsiye</li>
+        <li data-i18n="s11_i2">Psikolojik terapi</li>
+        <li data-i18n="s11_i3">Profesyonel danışmanlık</li>
+      </ul>
+    </section>
+
+    <!-- 12. Sorumluluğun Sınırlandırılması / Limitation of Liability -->
+    <section class="doc-section">
+      <h2><span class="num">12</span><span data-i18n="s12_title">Sorumluluğun Sınırlandırılması</span></h2>
+      <p data-i18n="s12_body">Yasaların izin verdiği azami ölçüde Maniforia aşağıdakilerden sorumlu tutulamaz:</p>
+      <ul>
+        <li data-i18n="s12_i1">Dolaylı veya arızi zararlar</li>
+        <li data-i18n="s12_i2">Veri kaybı</li>
+        <li data-i18n="s12_i3">Kar kaybı</li>
+      </ul>
+    </section>
+
+    <!-- 13. Gizlilik / Privacy -->
+    <section class="doc-section">
+      <h2><span class="num">13</span><span data-i18n="s13_title">Gizlilik</span></h2>
+      <p data-i18n="s13_body">Uygulamayı kullanımınız aynı zamanda Gizlilik Politikamıza tabidir.</p>
+    </section>
+
+    <!-- 14. Güncellemeler / Changes -->
+    <section class="doc-section">
+      <h2><span class="num">14</span><span data-i18n="s14_title">Güncellemeler</span></h2>
+      <p data-i18n="s14_body">Bu şartları istediğimiz zaman güncelleyebiliriz. Uygulamayı kullanmaya devam etmeniz güncellenmiş şartları kabul ettiğiniz anlamına gelir.</p>
+    </section>
+
+    <!-- 15. Geçerli Hukuk / Governing Law -->
+    <section class="doc-section">
+      <h2><span class="num">15</span><span data-i18n="s15_title">Geçerli Hukuk</span></h2>
+      <p data-i18n="s15_body">Bu şartlar geçerli uluslararası yasalar çerçevesinde yönetilir.</p>
+    </section>
+
+    <!-- 16. İletişim / Contact -->
+    <section class="doc-section">
+      <h2><span class="num">16</span><span data-i18n="s16_title">İletişim</span></h2>
+      <div class="contact-box">
+        <div class="label" data-i18n="s16_label">E-posta</div>
+        <a class="email" href="mailto:maniforiaapp@gmail.com">maniforiaapp@gmail.com</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p data-i18n="footerCopy">© 2026 Maniforia · Her hak saklıdır · Bilinçaltını şekillendir</p>
+  </footer>
+
+  <script>
+    const translations = {
+      tr: {
+        htmlLang: "tr",
+        pageTitle: "Maniforia — Hizmet Şartları",
+        back: "Ana Sayfa",
+        eyebrow: "Yasal Belge",
+        title: "Hizmet Şartları",
+        lastUpdatedLabel: "Son Güncelleme:",
+        lastUpdatedDate: "19 Nisan 2026",
+        lede: "Maniforia uygulamasını kullanarak bu şartları kabul etmiş olursunuz.",
+
+        s1_title: "Kabul",
+        s1_body: "Maniforia uygulamasını kullanarak bu şartları kabul etmiş olursunuz.",
+        s1_body2: "Kabul etmiyorsanız lütfen uygulamayı kullanmayınız.",
+
+        s2_title: "Geliştirici Bilgisi",
+        s2_app_label: "Uygulama Adı:",
+        s2_app_value: "Maniforia",
+        s2_dev_label: "Geliştirici:",
+        s2_dev_value: "Bireysel Geliştirici",
+        s2_email_label: "E-posta:",
+
+        s3_title: "Hizmet Tanımı",
+        s3_intro: "Maniforia şunları sunar:",
+        s3_i1: "Olumlama içerikleri",
+        s3_i2: "Kişisel gelişim araçları",
+        s3_i3: "Kullanıcı içerikleri",
+        s3_i4: "Premium üyelik özellikleri",
+        s3_note: "Uygulama yalnızca bilgilendirme ve kişisel gelişim amaçlıdır.",
+
+        s4_title: "Kullanım Uygunluğu",
+        s4_body: "Uygulama her yaştan kullanıcı tarafından kullanılabilir.",
+        s4_body2: "18 yaşın altındaysanız uygulamayı ebeveyn veya vasi gözetiminde kullanmanız önerilir.",
+
+        s5_title: "Kullanıcı Hesapları",
+        s5_intro: "Belirli özellikler için şu yöntemlerle hesap oluşturabilirsiniz:",
+        s5_i1: "Apple ile Giriş",
+        s5_i2: "Google ile Giriş",
+        s5_agree_intro: "Kullanıcı:",
+        s5_a1: "Hesabını güvenli tutmakla yükümlüdür",
+        s5_a2: "Verdiği bilgilerin doğruluğundan sorumludur",
+        s5_a3: "Hesabı altındaki tüm aktivitelerden sorumludur",
+
+        s6_title: "Kullanıcı İçerikleri",
+        s6_body: "Yüklediğiniz içerik size aittir. Ancak uygulamada gösterilebilmesi için münhasır olmayan, dünya genelinde, telifsiz bir kullanım lisansı verirsiniz.",
+        s6_prohibited_title: "Yasaklı İçerikler",
+        s6_prohibited_intro: "Aşağıdaki içerikleri yüklemek veya paylaşmak yasaktır:",
+        s6_p1: "Yasa dışı içerik",
+        s6_p2: "Nefret söylemi veya taciz",
+        s6_p3: "Müstehcen veya açık içerik",
+        s6_p4: "Başkalarının haklarını ihlal eden içerik",
+        s6_removal: "Herhangi bir içeriği kendi takdirimizde kaldırma hakkımızı saklı tutarız.",
+
+        s7_title: "Abonelik ve Ödemeler",
+        s7_intro: "Uygulama şunları sunabilir:",
+        s7_i1: "3 günlük ücretsiz deneme",
+        s7_i2: "Aylık veya yıllık abonelik planları",
+        s7_payment_intro: "Ödemeler şu platformlar üzerinden gerçekleştirilir:",
+        s7_p1: "Apple App Store",
+        s7_p2: "Google Play Store",
+        s7_c1: "Abonelikler iptal edilmediği sürece otomatik olarak yenilenir.",
+        s7_c2: "İptal işlemleri uygulama mağazası hesabınız üzerinden yapılır.",
+        s7_c3: "İadeler Apple veya Google tarafından yönetilir; Maniforia tarafından değil.",
+
+        s8_title: "Fikri Mülkiyet",
+        s8_body: "Kullanıcı tarafından üretilen içerikler hariç olmak üzere tasarım, marka ve yazılım dahil tüm uygulama içeriği Maniforia'ya aittir.",
+        s8_body2: "İzin alınmadan uygulamanın hiçbir bölümü kopyalanamaz, dağıtılamaz veya kullanılamaz.",
+
+        s9_title: "Kullanım Kısıtlamaları",
+        s9_intro: "Aşağıdakileri yapmamayı kabul edersiniz:",
+        s9_i1: "Uygulamayı tersine mühendislik yapmak veya hacklemek",
+        s9_i2: "Yasadışı amaçlarla kullanmak",
+        s9_i3: "Uygulama işlevselliğini engellemek",
+        s9_i4: "Yetkisiz erişim girişiminde bulunmak",
+
+        s10_title: "Hesap Kapatma",
+        s10_body: "Bu şartları ihlal etmeniz veya platformu kötüye kullanmanız halinde erişiminizi askıya alabilir veya sonlandırabiliriz.",
+        s10_body2: "Kullanıcı istediği zaman hesabını silebilir.",
+
+        s11_title: "Sorumluluk Reddi",
+        s11_body: "Uygulama motivasyonel ve kişisel gelişim içeriği sunar. Sonuçları veya kişisel çıktıları garanti etmiyoruz.",
+        s11_body2: "Uygulama şunların yerine geçmez:",
+        s11_i1: "Tıbbi tavsiye",
+        s11_i2: "Psikolojik terapi",
+        s11_i3: "Profesyonel danışmanlık",
+
+        s12_title: "Sorumluluğun Sınırlandırılması",
+        s12_body: "Yasaların izin verdiği azami ölçüde Maniforia aşağıdakilerden sorumlu tutulamaz:",
+        s12_i1: "Dolaylı veya arızi zararlar",
+        s12_i2: "Veri kaybı",
+        s12_i3: "Kar kaybı",
+
+        s13_title: "Gizlilik",
+        s13_body: "Uygulamayı kullanımınız aynı zamanda Gizlilik Politikamıza tabidir.",
+
+        s14_title: "Güncellemeler",
+        s14_body: "Bu şartları istediğimiz zaman güncelleyebiliriz. Uygulamayı kullanmaya devam etmeniz güncellenmiş şartları kabul ettiğiniz anlamına gelir.",
+
+        s15_title: "Geçerli Hukuk",
+        s15_body: "Bu şartlar geçerli uluslararası yasalar çerçevesinde yönetilir.",
+
+        s16_title: "İletişim",
+        s16_label: "E-posta",
+
+        footerCopy: "© 2026 Maniforia · Her hak saklıdır · Bilinçaltını şekillendir"
+      },
+      en: {
+        htmlLang: "en",
+        pageTitle: "Maniforia — Terms of Service",
+        back: "Home",
+        eyebrow: "Legal Document",
+        title: "Terms of Service",
+        lastUpdatedLabel: "Last Updated:",
+        lastUpdatedDate: "April 19, 2026",
+        lede: "By accessing or using the Maniforia mobile application, you agree to be bound by these Terms of Service.",
+
+        s1_title: "Acceptance of Terms",
+        s1_body: "By accessing or using the Maniforia mobile application (\"App\"), you agree to be bound by these Terms of Service.",
+        s1_body2: "If you do not agree, please do not use the App.",
+
+        s2_title: "Developer Information",
+        s2_app_label: "Application Name:",
+        s2_app_value: "Maniforia",
+        s2_dev_label: "Developer:",
+        s2_dev_value: "Individual Developer",
+        s2_email_label: "Contact Email:",
+
+        s3_title: "Description of Service",
+        s3_intro: "Maniforia is a mobile application that provides:",
+        s3_i1: "Affirmations and personal development content",
+        s3_i2: "User-generated content features",
+        s3_i3: "Profile customization and uploads",
+        s3_i4: "Optional subscription-based premium features",
+        s3_note: "The App is provided for informational and entertainment purposes only.",
+
+        s4_title: "Eligibility",
+        s4_body: "The App may be used by individuals of all ages.",
+        s4_body2: "If you are under 18, you should use the App with parental or guardian supervision.",
+
+        s5_title: "User Accounts",
+        s5_intro: "To use certain features, you may need to create an account via:",
+        s5_i1: "Apple Sign-In",
+        s5_i2: "Google Sign-In",
+        s5_agree_intro: "You agree to:",
+        s5_a1: "Keep your account secure",
+        s5_a2: "Provide accurate information (if you choose to provide it)",
+        s5_a3: "Be responsible for all activity under your account",
+
+        s6_title: "User Content",
+        s6_body: "You retain ownership of your content. However, by uploading content, you grant Maniforia a non-exclusive, worldwide, royalty-free license to store, display, and operate the service.",
+        s6_prohibited_title: "Prohibited Content",
+        s6_prohibited_intro: "You agree not to upload or share:",
+        s6_p1: "Illegal content",
+        s6_p2: "Hate speech or harassment",
+        s6_p3: "Pornographic or explicit material",
+        s6_p4: "Content that violates the rights of others",
+        s6_removal: "We reserve the right to remove any content at our discretion.",
+
+        s7_title: "Subscriptions & Payments",
+        s7_intro: "The App may offer:",
+        s7_i1: "3-day free trial",
+        s7_i2: "Monthly or yearly subscription plans",
+        s7_payment_intro: "Payments are processed via:",
+        s7_p1: "Apple App Store",
+        s7_p2: "Google Play Store",
+        s7_c1: "Subscriptions renew automatically unless canceled.",
+        s7_c2: "You can manage or cancel subscriptions through your app store account.",
+        s7_c3: "Refunds are handled by Apple or Google, not Maniforia.",
+
+        s8_title: "Intellectual Property",
+        s8_body: "All app content (excluding user-generated content), including design, branding, and software, is owned by Maniforia.",
+        s8_body2: "You may not copy, distribute, or exploit any part of the App without permission.",
+
+        s9_title: "App Usage Restrictions",
+        s9_intro: "You agree not to:",
+        s9_i1: "Reverse engineer or hack the app",
+        s9_i2: "Use the app for unlawful purposes",
+        s9_i3: "Interfere with app functionality",
+        s9_i4: "Attempt unauthorized access",
+
+        s10_title: "Termination",
+        s10_body: "We may suspend or terminate your access if you violate these Terms or misuse the platform.",
+        s10_body2: "You may delete your account at any time.",
+
+        s11_title: "Disclaimer",
+        s11_body: "The App provides motivational and self-development content. We do not guarantee results or personal outcomes.",
+        s11_body2: "The App is not a substitute for:",
+        s11_i1: "Medical advice",
+        s11_i2: "Psychological therapy",
+        s11_i3: "Professional consultation",
+
+        s12_title: "Limitation of Liability",
+        s12_body: "To the maximum extent permitted by law, Maniforia shall not be liable for:",
+        s12_i1: "Any indirect or incidental damages",
+        s12_i2: "Loss of data",
+        s12_i3: "Loss of profits",
+
+        s13_title: "Privacy",
+        s13_body: "Your use of the App is also governed by our Privacy Policy.",
+
+        s14_title: "Changes to Terms",
+        s14_body: "We may update these Terms at any time. Continued use of the App means you accept the updated Terms.",
+
+        s15_title: "Governing Law",
+        s15_body: "These Terms shall be governed by applicable international laws.",
+
+        s16_title: "Contact",
+        s16_label: "Email",
+
+        footerCopy: "© 2026 Maniforia · All rights reserved · Shape your subconscious"
+      }
+    };
+
+    const STORAGE_KEY = "maniforia_lang";
+
+    function setLang(lang) {
+      const dict = translations[lang] || translations.tr;
+      document.documentElement.lang = dict.htmlLang;
+      document.title = dict.pageTitle;
+
+      document.querySelectorAll("[data-i18n]").forEach(el => {
+        const key = el.getAttribute("data-i18n");
+        if (dict[key] != null) el.textContent = dict[key];
+      });
+
+      document.querySelectorAll(".lang-btn").forEach(btn => {
+        btn.classList.toggle("active", btn.dataset.lang === lang);
+        btn.setAttribute("aria-pressed", btn.dataset.lang === lang ? "true" : "false");
+      });
+
+      try { localStorage.setItem(STORAGE_KEY, lang); } catch (e) {}
+    }
+
+    document.querySelectorAll(".lang-btn").forEach(btn => {
+      btn.addEventListener("click", () => setLang(btn.dataset.lang));
+    });
+
+    (function initLang() {
+      let saved = null;
+      try { saved = localStorage.getItem(STORAGE_KEY); } catch (e) {}
+      const browser = (navigator.language || "tr").toLowerCase().startsWith("tr") ? "tr" : "en";
+      setLang(saved || browser || "tr");
+    })();
+  </script>
+</body>
+</html>
