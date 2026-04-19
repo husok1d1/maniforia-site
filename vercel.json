@@ -1,9 +1,12 @@
 {
-  "redirects": [
+  "rewrites": [
     {
-      "source": "/gizliliksozlesmesi",
-      "destination": "/privacy.html",
-      "permanent": true
+      "source": "/privacy",
+      "destination": "/privacy.html"
+    },
+    {
+      "source": "/terms",
+      "destination": "/terms.html"
     }
   ]
 }
